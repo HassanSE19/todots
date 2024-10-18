@@ -5,7 +5,7 @@ import {
   TaskDeleteType,
   StatustoggleType,
   ITaskObj,
-} from "../../type";
+} from "type";
 
 interface ITaskListProps {
   taskList: ITaskObj[];

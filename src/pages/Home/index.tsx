@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { ITaskObj } from "../../type";
+import { ITaskObj } from "type";
 
-import Layout from "../../components/Layout";
-import Overview from "../../components/Overview";
-import AddTask from "../../components/AddTask";
-import TaskList from "../../components/TaskList";
+import Layout from "components/Layout";
+import Overview from "components/Overview";
+import AddTask from "components/AddTask";
+import TaskList from "components/TaskList";
 
 const Home = () => {
   const [taskList, setTaskList] = useState<ITaskObj[]>([]);

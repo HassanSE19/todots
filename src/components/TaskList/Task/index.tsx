@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {TaskDescValidationSchema} from '../../../validations/taskValidation'
-import { editIcon } from "../../../assets/svg/edit";
-import { binIcon } from "../../../assets/svg/bin";
+import {TaskDescValidationSchema} from 'validations/taskValidation'
+import { editIcon } from "assets/svg/edit";
+import { binIcon } from "assets/svg/bin";
 import {
   TaskEditType,
   TaskDeleteType,

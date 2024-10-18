@@ -1,9 +1,9 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {TaskDescValidationSchema} from '../../validations/taskValidation';
-import { ITaskObj, IFormInput } from "../../type";
-import addIcon from "../../assets/images/add_icon.png";
+import {TaskDescValidationSchema} from 'validations/taskValidation';
+import { ITaskObj, IFormInput } from "type";
+import addIcon from "assets/images/add_icon.png";
 
 interface IAddTaskProps {
   handleAdd: (task: ITaskObj) => void;
