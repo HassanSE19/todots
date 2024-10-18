@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { editIcon } from "../../../assets/svg/edit";
 import { binIcon } from "../../../assets/svg/bin";
 import {
   TaskEditType,
   TaskDeleteType,
   StatustoggleType,
-  ITaskObj,
-  OnSubmitEvent,
-  OnChangeEvent,
+  ITaskObj, 
+  IFormInput
 } from "../../../type";
 
 interface ITaskProps {
@@ -26,24 +26,20 @@ const Task: React.FC<ITaskProps> = ({
   handleStatusToggle,
 }) => {
   const [allowEdit, setAllowEdit] = useState<boolean>(false);
-  const [taskDesc, setTaskDesc] = useState<string>(task.desc);
-
-  const handleTaskEdit = (event: OnSubmitEvent) => {
-    event.preventDefault();
+  const {register, reset, handleSubmit, } = useForm<IFormInput>()
+  const onSubmit: SubmitHandler<IFormInput> = (data) => {
     setAllowEdit(false);
-    handleEdit(taskDesc, index);
+    handleEdit(data.desc, index);
   };
 
   return allowEdit ? (
     <div className="border-[#c2b39a] border h-16 mb-[27px]" key={index}>
-      <form className="w-full h-full" onSubmit={handleTaskEdit}>
+      <form className="w-full h-full" onSubmit={handleSubmit(onSubmit)}>
         <input
           type="text"
-          id="todo"
           defaultValue={task.desc}
-          name="todo"
+          {...register("desc", {required: true})}
           className="h-full bg-[#000000] text-white w-full px-4"
-          onChange={(event: OnChangeEvent) => setTaskDesc(event.target.value)}
           style={{ outline: "none" }}
         />
       </form>

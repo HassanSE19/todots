@@ -5,6 +5,10 @@ export interface ITaskObj {
   isCompleted: boolean;
 }
 
+export interface IFormInput {
+  desc: string;
+}
+
 export type OnSubmitEvent =
   | FormEvent<HTMLFormElement>
   | React.MouseEvent<HTMLImageElement>;
