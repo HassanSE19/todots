@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import {TaskDescValidationSchema} from '../../../validations/taskValidation'
 import { editIcon } from "../../../assets/svg/edit";
 import { binIcon } from "../../../assets/svg/bin";
 import {
   TaskEditType,
   TaskDeleteType,
   StatustoggleType,
-  ITaskObj, 
-  IFormInput
+  ITaskObj,
+  IFormInput,
 } from "../../../type";
 
 interface ITaskProps {
@@ -26,10 +28,19 @@ const Task: React.FC<ITaskProps> = ({
   handleStatusToggle,
 }) => {
   const [allowEdit, setAllowEdit] = useState<boolean>(false);
-  const {register, reset, handleSubmit, } = useForm<IFormInput>()
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<IFormInput>({
+    resolver: yupResolver(TaskDescValidationSchema),
+  });
+
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     setAllowEdit(false);
     handleEdit(data.desc, index);
+    reset();
   };
 
   return allowEdit ? (
@@ -38,10 +49,13 @@ const Task: React.FC<ITaskProps> = ({
         <input
           type="text"
           defaultValue={task.desc}
-          {...register("desc", {required: true})}
+          {...register("desc", { required: true })}
           className="h-full bg-[#000000] text-white w-full px-4"
           style={{ outline: "none" }}
         />
+        {errors.desc && (
+          <p className="text-red-500 text-sm mt-1">{errors.desc.message}</p>
+        )}
       </form>
     </div>
   ) : (

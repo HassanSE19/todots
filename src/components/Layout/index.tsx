@@ -1,4 +1,4 @@
-import React, {ReactNode} from "react";
+import React, { ReactNode } from "react";
 import logo from "../../assets/images/icon.png";
 
 interface LayoutProps {
