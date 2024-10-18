@@ -1,5 +1,3 @@
-import React, { useState, FormEvent, ChangeEvent } from "react";
-
 export interface ITaskObj {
   desc: string;
   isCompleted: boolean;

@@ -1,5 +1,5 @@
-import React, {ReactNode} from "react";
-import logo from "../../assets/images/icon.png";
+import React, { ReactNode } from "react";
+import logo from "assets/images/icon.png";
 
 interface LayoutProps {
   children: ReactNode;
@@ -7,7 +7,7 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="w-[70%] mx-auto h-screen min-w-max">
+    <div className="w-[70%] mx-auto h-screen min-w-max overflow-y-scroll no-scrollbar">
       <div className="p-[42px] flex items-center">
         <img
           src={logo}
