@@ -1,15 +1,17 @@
 import React from "react";
+import { useAppDispatch } from "store/store";
+import {
+  ADD_TASK_STARTED,
+  ADD_TASK_COMPLETED,
+} from "store/reducers/taskListSlice";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {TaskDescValidationSchema} from 'validations/taskValidation';
-import { ITaskObj, IFormInput } from "type";
+import { TaskDescValidationSchema } from "validations/taskValidation";
+import { IFormInput } from "type";
 import addIcon from "assets/images/add_icon.png";
 
-interface IAddTaskProps {
-  handleAdd: (task: ITaskObj) => void;
-}
-
-const AddTask: React.FC<IAddTaskProps> = ({ handleAdd }) => {
+const AddTask = () => {
+  const dispatch = useAppDispatch();
   const {
     register,
     handleSubmit,
@@ -23,7 +25,8 @@ const AddTask: React.FC<IAddTaskProps> = ({ handleAdd }) => {
       desc: data.desc,
       isCompleted: false,
     };
-    handleAdd(newTask);
+    dispatch(ADD_TASK_STARTED());
+    dispatch(ADD_TASK_COMPLETED(newTask));
     reset();
   };
 
@@ -50,9 +53,7 @@ const AddTask: React.FC<IAddTaskProps> = ({ handleAdd }) => {
         </button>
       </form>
       {errors.desc && (
-        <p className="text-red-500 text-sm mt-1">
-          {errors.desc.message}
-        </p>
+        <p className="text-red-500 text-sm mt-1">{errors.desc.message}</p>
       )}
     </div>
   );

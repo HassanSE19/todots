@@ -9,4 +9,4 @@ export interface IFormInput {
 
 export type TaskEditType = (newDesc: string, targetIndex: number) => void;
 export type TaskDeleteType = (targetIndex: number) => void;
-export type StatustoggleType = (targetIndex: number) => void;
+export type StatusToggleType = (targetIndex: number) => void;
