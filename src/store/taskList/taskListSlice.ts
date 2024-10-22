@@ -7,16 +7,7 @@ interface IInitialStateObj {
   totalTaskCount: number;
   isLoading: boolean;
   statusCode: number | null;
-  error: string | null;
-}
-
-interface IEditTaskPayload {
-  newDesc: string;
-  targetIndex: number;
-}
-
-interface IDeleteTogglePayload {
-  targetIndex: number;
+  error: any;
 }
 
 const initialState: IInitialStateObj = {
@@ -37,14 +28,15 @@ export const taskListSlice = createSlice({
       state.isLoading = true;
     },
 
-    ADD_TASK_COMPLETED: (state, { payload }: PayloadAction<ITaskObj>) => {
+    ADD_TASK_COMPLETED: (state, { payload }: PayloadAction<ITaskObj[]>) => {
       state.isLoading = false;
-      state.taskArray.push(payload);
+      state.taskArray = payload;
       state.totalTaskCount = state.taskArray.length;
     },
 
-    ADD_TASK_REJECTED: (state) => {
-      console.log("Error Adding Task");
+    ADD_TASK_REJECTED: (state, { payload }: PayloadAction<ITaskObj>) => {
+      state.isLoading = false;
+      state.error = payload;
     },
 
     //Edit Task Actions
@@ -52,16 +44,14 @@ export const taskListSlice = createSlice({
       state.isLoading = true;
     },
 
-    EDIT_TASK_COMPLETED: (
-      state,
-      { payload: { newDesc, targetIndex } }: PayloadAction<IEditTaskPayload>
-    ) => {
+    EDIT_TASK_COMPLETED: (state, { payload }: PayloadAction<ITaskObj[]>) => {
       state.isLoading = false;
-      state.taskArray[targetIndex].desc = newDesc;
+      state.taskArray = payload;
     },
 
-    EDIT_TASK_REJECTED: (state) => {
-      console.log("Error Editting Task");
+    EDIT_TASK_REJECTED: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
     },
 
     //Delete Task Actions
@@ -69,22 +59,18 @@ export const taskListSlice = createSlice({
       state.isLoading = true;
     },
 
-    DELETE_TASK_COMPLETED: (
-      state,
-      { payload: { targetIndex } }: PayloadAction<IDeleteTogglePayload>
-    ) => {
+    DELETE_TASK_COMPLETED: (state, { payload }: PayloadAction<ITaskObj[]>) => {
       state.isLoading = false;
-      state.taskArray = state.taskArray.filter(
-        (_, index) => index !== targetIndex
-      );
+      state.taskArray = payload;
       state.totalTaskCount = state.taskArray.length;
       state.completedTaskCount = state.taskArray.filter(
         (task) => task.isCompleted === true
       ).length;
     },
 
-    DELETE_TASK_REJECTED: (state) => {
-      console.log("Error Deleting Task");
+    DELETE_TASK_REJECTED: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
     },
 
     //Status Toggle Actions
@@ -94,20 +80,18 @@ export const taskListSlice = createSlice({
 
     SET_TASK_STATUS_COMPLETED: (
       state,
-      { payload: { targetIndex } }: PayloadAction<IDeleteTogglePayload>
+      { payload }: PayloadAction<ITaskObj[]>
     ) => {
       state.isLoading = false;
-      state.taskArray.splice(targetIndex, 1, {
-        ...state.taskArray[targetIndex],
-        isCompleted: !state.taskArray[targetIndex].isCompleted,
-      });
+      state.taskArray = payload;
       state.completedTaskCount = state.taskArray.filter(
         (task) => task.isCompleted === true
       ).length;
     },
 
-    SET_TASK_STATUS_REJECTED: (state) => {
-      console.log("Error Setting Task Status");
+    SET_TASK_STATUS_REJECTED: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
     },
   },
 });

@@ -1,14 +1,19 @@
-import { useDispatch, useSelector } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
-import taskListReducer from "store/reducers/taskListSlice";
+import createSagaMiddleware from 'redux-saga'
+import taskListReducer from "store/taskList/taskListSlice";
+import saga from './saga'
+
+const sagaMiddleware = createSagaMiddleware()
 
 const store = configureStore({
   reducer: {
     taskList: taskListReducer,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
 });
+
+sagaMiddleware.run(saga)
+
 export default store;
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
-export const useAppSelector = useSelector.withTypes<RootState>();

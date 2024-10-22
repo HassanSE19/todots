@@ -1,16 +1,12 @@
 import { connect } from "react-redux";
 import { AppDispatch } from "store/store";
 import AddTask from "components/AddTask";
+import { TODO_ACTIONS_TYPES } from "utils/constants/actionTypes";
 import { ITaskObj } from "type";
-import {
-  ADD_TASK_STARTED,
-  ADD_TASK_COMPLETED,
-} from "store/reducers/taskListSlice";
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
   addTask: (newTask: ITaskObj) => {
-    dispatch(ADD_TASK_STARTED());
-    dispatch(ADD_TASK_COMPLETED(newTask));
+    dispatch({ type: TODO_ACTIONS_TYPES.ADD_TASK, payload: newTask });
   },
 });
 

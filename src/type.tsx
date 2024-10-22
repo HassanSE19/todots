@@ -7,6 +7,15 @@ export interface IFormInput {
   desc: string;
 }
 
+export interface IEditTaskPayload {
+  newDesc: string;
+  targetIndex: number;
+}
+
+export interface IDeleteAndTogglePayload {
+  targetIndex: number;
+}
+
 export interface IHomeProps {
   taskArray: ITaskObj[];
   totalTaskCount: number;
