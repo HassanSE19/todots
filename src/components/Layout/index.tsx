@@ -1,11 +1,11 @@
 import React, { ReactNode } from "react";
 import logo from "assets/images/icon.png";
 
-interface LayoutProps {
+interface ILayoutProps {
   children: ReactNode;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout: React.FC<ILayoutProps> = ({ children }) => {
   return (
     <div className="w-[70%] mx-auto h-screen min-w-max overflow-y-scroll no-scrollbar">
       <div className="p-[42px] flex items-center">

@@ -1,17 +1,11 @@
 import React from "react";
-import { useAppDispatch } from "store/store";
-import {
-  ADD_TASK_STARTED,
-  ADD_TASK_COMPLETED,
-} from "store/reducers/taskListSlice";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { TaskDescValidationSchema } from "validations/taskValidation";
-import { IFormInput } from "type";
+import { IAddTaskProps, IFormInput } from "type";
 import addIcon from "assets/images/add_icon.png";
 
-const AddTask = () => {
-  const dispatch = useAppDispatch();
+const AddTask: React.FC<IAddTaskProps> = ({ addTask }) => {
   const {
     register,
     handleSubmit,
@@ -25,8 +19,7 @@ const AddTask = () => {
       desc: data.desc,
       isCompleted: false,
     };
-    dispatch(ADD_TASK_STARTED());
-    dispatch(ADD_TASK_COMPLETED(newTask));
+    addTask(newTask);
     reset();
   };
 

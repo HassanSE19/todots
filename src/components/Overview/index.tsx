@@ -1,10 +1,8 @@
 import React from "react";
-import { useAppSelector } from "store/store";
+import { IOverviewProps } from "type";
 
-const Overview = () => {
-  const { completedTaskCount, totalTaskCount } = useAppSelector(
-    (state) => state.taskList
-  );
+const Overview: React.FC<IOverviewProps> = ({totalTaskCount, completedTaskCount}) => {
+
   return (
     <div className="mb-[38px] border-[#c2b39a] border rounded-xl p-3 flex justify-around items-center">
       <div className="mr-4">
