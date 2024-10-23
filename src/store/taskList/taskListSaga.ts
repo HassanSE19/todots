@@ -63,10 +63,9 @@ function* setTaskStatus({
     let newTaskArray: ITaskObj[] = yield select(
       (state) => state.taskList.taskArray
     );
-    newTaskArray = newTaskArray.splice(targetIndex, 1, {
-      ...newTaskArray[targetIndex],
-      isCompleted: !newTaskArray[targetIndex].isCompleted,
-    });
+    newTaskArray = newTaskArray.map((task, index) =>
+      index === targetIndex ? { ...task, isCompleted: !task.isCompleted } : task
+    );
     yield put(SET_TASK_STATUS_COMPLETED(newTaskArray));
   } catch (error: any) {
     yield put(SET_TASK_STATUS_REJECTED(error));
