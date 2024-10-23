@@ -3,23 +3,18 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import { IDeleteAndTogglePayload, IEditTaskPayload, ITaskObj } from "type";
 import { TODO_ACTIONS_TYPES } from "utils/constants/actionTypes";
 import {
-  ADD_TASK_STARTED,
   ADD_TASK_COMPLETED,
   ADD_TASK_REJECTED,
-  EDIT_TASK_STARTED,
   EDIT_TASK_COMPLETED,
   EDIT_TASK_REJECTED,
-  DELETE_TASK_STARTED,
   DELETE_TASK_COMPLETED,
   DELETE_TASK_REJECTED,
-  SET_TASK_STATUS_STARTED,
   SET_TASK_STATUS_COMPLETED,
   SET_TASK_STATUS_REJECTED,
 } from "./taskListSlice";
 
 function* addTask({ payload }: PayloadAction<ITaskObj>) {
   try {
-    yield put(ADD_TASK_STARTED());
     let newTaskArray: ITaskObj[] = yield select(
       (state) => state.taskList.taskArray
     );
@@ -35,7 +30,6 @@ function* editTask({
   payload: { newDesc, targetIndex },
 }: PayloadAction<IEditTaskPayload>) {
   try {
-    yield put(EDIT_TASK_STARTED());
     let newTaskArray: ITaskObj[] = yield select(
       (state) => state.taskList.taskArray
     );
@@ -52,7 +46,6 @@ function* deleteTask({
   payload: { targetIndex },
 }: PayloadAction<IDeleteAndTogglePayload>) {
   try {
-    yield put(DELETE_TASK_STARTED());
     let newTaskArray: ITaskObj[] = yield select(
       (state) => state.taskList.taskArray
     );
@@ -67,7 +60,6 @@ function* setTaskStatus({
   payload: { targetIndex },
 }: PayloadAction<IDeleteAndTogglePayload>) {
   try {
-    yield put(SET_TASK_STATUS_STARTED());
     let newTaskArray: ITaskObj[] = yield select(
       (state) => state.taskList.taskArray
     );
