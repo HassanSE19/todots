@@ -1,6 +1,12 @@
-export enum TODO_ACTIONS_TYPES {
+export enum TODO_ACTION_TYPES {
   ADD_TASK = "taskList/ADD_TASK_STARTED",
   DELETE_TASK = "taskList/EDIT_TASK_STARTED",
   EDIT_TASK = "taskList/DELETE_TASK_STARTED",
   SET_TASK_STATUS = "taskList/SET_TASK_STATUS_STARTED",
+}
+
+export enum USER_ACTION_TYPES {
+  LOGIN = "user/LOGIN_STARTED",
+  SIGNUP = "user/SIGNUP_STARTED",
+  LOGOUT = "user/LOGOUT",
 }

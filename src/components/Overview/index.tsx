@@ -1,8 +1,10 @@
 import React from "react";
 import { IOverviewProps } from "type";
 
-const Overview: React.FC<IOverviewProps> = ({totalTaskCount, completedTaskCount}) => {
-
+const Overview: React.FC<IOverviewProps> = ({
+  totalTaskCount,
+  completedTaskCount,
+}) => {
   return (
     <div className="mb-[38px] border-[#c2b39a] border rounded-xl p-3 flex justify-around items-center">
       <div className="mr-4">

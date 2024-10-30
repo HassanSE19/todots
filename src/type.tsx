@@ -1,9 +1,27 @@
+import { ReactNode } from "react";
+
+export interface IAuthObj {
+  username: string;
+  password: string;
+}
+
+export interface IUserObj {
+  _id: string;
+  username: string;
+  token: string;
+}
+
 export interface ITaskObj {
   desc: string;
   isCompleted: boolean;
 }
 
-export interface IFormInput {
+export interface IAuthFormInput {
+  username: string;
+  password: string;
+}
+
+export interface ITaskFormInput {
   desc: string;
 }
 
@@ -14,6 +32,25 @@ export interface IEditTaskPayload {
 
 export interface IDeleteAndTogglePayload {
   targetIndex: number;
+}
+
+export interface ILayoutProps {
+  children: ReactNode;
+  withLogout: boolean;
+  handleLogout: () => void;
+}
+
+export interface ILayoutContainerProps {
+  children: ReactNode;
+  withLogout: boolean;
+}
+
+export interface ILoginProps {
+  login: (user: IAuthObj) => void;
+}
+
+export interface ISignupProps {
+  signup: (user: IAuthObj) => void;
 }
 
 export interface IHomeProps {

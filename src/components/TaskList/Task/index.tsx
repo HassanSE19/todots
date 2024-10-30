@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { TaskDescValidationSchema } from "validations/taskValidation";
+import TaskDescValidationSchema from "validations/taskValidation";
 import { editIcon } from "assets/svg/edit";
 import { binIcon } from "assets/svg/bin";
-import { ITaskProps, IFormInput } from "type";
+import { ITaskProps, ITaskFormInput } from "type";
 
 const Task: React.FC<ITaskProps> = ({
   task,
@@ -20,11 +20,11 @@ const Task: React.FC<ITaskProps> = ({
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<IFormInput>({
+  } = useForm<ITaskFormInput>({
     resolver: yupResolver(TaskDescValidationSchema),
   });
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+  const onSubmit: SubmitHandler<ITaskFormInput> = (data) => {
     setAllowEdit(false);
     editTask({ newDesc: data.desc, targetIndex: index });
     reset();

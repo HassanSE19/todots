@@ -1,7 +1,7 @@
 import { put, takeEvery, select } from "redux-saga/effects";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { IDeleteAndTogglePayload, IEditTaskPayload, ITaskObj } from "type";
-import { TODO_ACTIONS_TYPES } from "utils/constants/actionTypes";
+import { TODO_ACTION_TYPES } from "utils/constants/actionTypes";
 import {
   ADD_TASK_COMPLETED,
   ADD_TASK_REJECTED,
@@ -73,8 +73,8 @@ function* setTaskStatus({
 }
 
 export function* watchTodoListSaga() {
-  yield takeEvery(TODO_ACTIONS_TYPES.ADD_TASK, addTask);
-  yield takeEvery(TODO_ACTIONS_TYPES.EDIT_TASK, editTask);
-  yield takeEvery(TODO_ACTIONS_TYPES.DELETE_TASK, deleteTask);
-  yield takeEvery(TODO_ACTIONS_TYPES.SET_TASK_STATUS, setTaskStatus);
+  yield takeEvery(TODO_ACTION_TYPES.ADD_TASK, addTask);
+  yield takeEvery(TODO_ACTION_TYPES.EDIT_TASK, editTask);
+  yield takeEvery(TODO_ACTION_TYPES.DELETE_TASK, deleteTask);
+  yield takeEvery(TODO_ACTION_TYPES.SET_TASK_STATUS, setTaskStatus);
 }

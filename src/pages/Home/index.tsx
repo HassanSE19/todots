@@ -1,5 +1,5 @@
 import React from "react";
-import Layout from "components/Layout";
+import LayoutContainer from "containers/LayoutContainer";
 import Overview from "components/Overview";
 import AddTaskContainer from "containers/AddTaskContainer";
 import TaskList from "components/TaskList";
@@ -12,14 +12,14 @@ const Home: React.FC<IHomeProps> = ({
   isLoading,
 }) => {
   return (
-    <Layout>
+    <LayoutContainer withLogout={true}>
       <Overview
         totalTaskCount={totalTaskCount}
         completedTaskCount={completedTaskCount}
       />
       <AddTaskContainer />
       <TaskList taskArray={taskArray} isLoading={isLoading} />
-    </Layout>
+    </LayoutContainer>
   );
 };
 
