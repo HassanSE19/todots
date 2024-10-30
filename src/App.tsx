@@ -1,28 +1,13 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import HomeContainer from "containers/HomeContainer";
-import LoginContainer from "containers/LoginContainer";
-import SignupContainer from "containers/SignupContainer";
-import NotFound from "pages/NotFound";
+import { BrowserRouter } from "react-router-dom";
+import PublicRoutes from "routes/publicRoutes";
+import PrivateRoutes from "routes/privateRoutes";
 
 function App() {
+  const isAuthenticated = true;
+
   return (
     <BrowserRouter>
-      {false ? (
-        <Routes>
-          <Route path="/" Component={HomeContainer} />
-          <Route path="/home" Component={HomeContainer} />
-          <Route path="/signup" Component={SignupContainer} />
-          <Route path="/login" Component={LoginContainer} />
-          <Route path="*" Component={NotFound} />
-        </Routes>
-      ) : (
-        <Routes>
-          <Route path="/" Component={LoginContainer} />
-          <Route path="/login" Component={LoginContainer} />
-          <Route path="/signup" Component={SignupContainer} />
-          <Route path="*" Component={NotFound} />
-        </Routes>
-      )}
+      {isAuthenticated ? <PublicRoutes /> : <PrivateRoutes />}
     </BrowserRouter>
   );
 }
