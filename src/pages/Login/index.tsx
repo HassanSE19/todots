@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { IAuthFormInput } from "type";
 import { useNavigate } from "react-router-dom";
 
-const SignUp = () => {
+const Login = () => {
   const navigate = useNavigate();
 
   const {
@@ -82,4 +82,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Login;

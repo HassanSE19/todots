@@ -32,7 +32,7 @@ const SignUp = () => {
     <Layout>
       <div className="w-2/3 mx-auto items-center">
         <p className="text-center text-4xl font-semibold text-white pt-2 mb-16">
-          {"Login!"}
+          {"Sign Up!"}
         </p>
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -64,18 +64,18 @@ const SignUp = () => {
             type="submit"
             className="mt-8 rounded-2xl m-2 text-white bg-[#88ab33] w-2/5 px-4 py-2 shadow-md hover:text-[#88ab33] hover:bg-white transition duration-200 ease-in"
           >
-            {"Login"}
+            {"Sign Up"}
           </button>
         </form>
         <div className="mb-4 mx-auto border-[1px] justify-center w-20 border-[grey] border-solid"></div>
         <p className="text-center text-white mt-4 text-sm">
-          {"Don't have an account?"}
+          {"Already have an account?"}
         </p>
         <p
-          onClick={() => navigate("/signup")}
+          onClick={() => navigate("/login")}
           className="text-center text-[#88ab33] mb-4 text-sm font-medium cursor-pointer"
         >
-          {"Sign Up Now"}
+          {"Login Now"}
         </p>
       </div>
     </Layout>
