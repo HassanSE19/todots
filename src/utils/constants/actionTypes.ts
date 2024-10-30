@@ -8,4 +8,5 @@ export enum TODO_ACTION_TYPES {
 export enum USER_ACTION_TYPES {
   LOGIN = "user/LOGIN_STARTED",
   SIGNUP = "user/SIGNUP_STARTED",
+  LOGOUT = "user/LOGOUT",
 }

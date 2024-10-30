@@ -6,7 +6,7 @@ import flagIcon from "assets/images/flagIcon.png";
 const NotFound = () => {
   const navigate = useNavigate();
   return (
-    <Layout>
+    <Layout  withLogout={false} handleLogout={()=>{}}>
       <div className="mx-auto grid place-items-center text-center px-8">
         <div>
           <img src={flagIcon} className="w-20 h-20 mx-auto" />

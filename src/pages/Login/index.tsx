@@ -3,10 +3,10 @@ import Layout from "components/Layout";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { AuthValidationSchema } from "validations/authValidationSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { IAuthFormInput } from "type";
+import { IAuthFormInput, ILoginProps } from "type";
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Login: React.FC<ILoginProps> = ({login}) => {
   const navigate = useNavigate();
 
   const {
@@ -18,18 +18,13 @@ const Login = () => {
     resolver: yupResolver(AuthValidationSchema),
   });
   const onSubmit: SubmitHandler<IAuthFormInput> = (data) => {
-    // const userCreds = {
-    //   username: data.username,
-    //   password: false,
-    // };
-    // loginUser(data);
-    console.log("Data From Login: ", data);
+    login(data);
     reset();
     navigate("/home");
   };
 
   return (
-    <Layout>
+    <Layout  withLogout={false} handleLogout={()=>{}}>
       <div className="w-2/3 mx-auto items-center">
         <p className="text-center text-4xl font-semibold text-white pt-2 mb-16">
           {"Login!"}
