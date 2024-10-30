@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { IAuthFormInput, ISignupProps } from "type";
 import { useNavigate } from "react-router-dom";
 
-const SignUp: React.FC<ISignupProps> = ({signup}) => {
+const SignUp: React.FC<ISignupProps> = ({ signup }) => {
   const navigate = useNavigate();
 
   const {
@@ -24,7 +24,7 @@ const SignUp: React.FC<ISignupProps> = ({signup}) => {
   };
 
   return (
-    <Layout withLogout={false} handleLogout={()=>{}}>
+    <Layout withLogout={false} handleLogout={() => {}}>
       <div className="w-2/3 mx-auto items-center">
         <p className="text-center text-4xl font-semibold text-white pt-2 mb-16">
           {"Sign Up!"}

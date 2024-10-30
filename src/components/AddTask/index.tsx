@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import  TaskDescValidationSchema from "validations/taskValidation";
+import TaskDescValidationSchema from "validations/taskValidation";
 import { IAddTaskProps, ITaskFormInput } from "type";
 import addIcon from "assets/images/addIcon.png";
 

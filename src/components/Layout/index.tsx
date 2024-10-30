@@ -18,14 +18,14 @@ const Layout: React.FC<ILayoutProps> = ({
           />
           <div className="text-[2em] font-bold">TODO</div>
         </div>
-          {withLogout && (
-            <button
-              onClick={() => handleLogout()}
-              className="rounded-2xl text-white bg-[#88ab33] px-4 py-2 shadow-md hover:text-[#88ab33] hover:bg-white transition duration-200 ease-in"
-            >
-              {"Logout"}
-            </button>
-          )}
+        {withLogout && (
+          <button
+            onClick={() => handleLogout()}
+            className="rounded-2xl text-white bg-[#88ab33] px-4 py-2 shadow-md hover:text-[#88ab33] hover:bg-white transition duration-200 ease-in"
+          >
+            {"Logout"}
+          </button>
+        )}
       </div>
       <div className="w-5/12 mx-auto min-w-max">{children}</div>
     </div>
