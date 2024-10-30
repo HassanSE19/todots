@@ -1,9 +1,9 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { TaskDescValidationSchema } from "validations/taskValidation";
-import { IAddTaskProps, IFormInput } from "type";
-import addIcon from "assets/images/add_icon.png";
+import  TaskDescValidationSchema from "validations/taskValidation";
+import { IAddTaskProps, ITaskFormInput } from "type";
+import addIcon from "assets/images/addIcon.png";
 
 const AddTask: React.FC<IAddTaskProps> = ({ addTask }) => {
   const {
@@ -11,10 +11,10 @@ const AddTask: React.FC<IAddTaskProps> = ({ addTask }) => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<IFormInput>({
+  } = useForm<ITaskFormInput>({
     resolver: yupResolver(TaskDescValidationSchema),
   });
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+  const onSubmit: SubmitHandler<ITaskFormInput> = (data) => {
     const newTask = {
       desc: data.desc,
       isCompleted: false,

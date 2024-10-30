@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import logo from "assets/images/icon.png";
+import logo from "assets/images/logo.png";
 
 interface ILayoutProps {
   children: ReactNode;

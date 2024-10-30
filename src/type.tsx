@@ -1,9 +1,25 @@
+export interface IUserObj {
+  _id: string;
+  username: string;
+  token: string;
+}
+
+export interface IAuthObj {
+  username: string;
+  password: string;
+}
+
 export interface ITaskObj {
   desc: string;
   isCompleted: boolean;
 }
 
-export interface IFormInput {
+export interface IAuthFormInput {
+  username: string;
+  password: string;
+}
+
+export interface ITaskFormInput {
   desc: string;
 }
 
