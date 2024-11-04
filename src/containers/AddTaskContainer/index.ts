@@ -5,7 +5,7 @@ import { TODO_ACTION_TYPES } from "utils/constants/actionTypes";
 import { ITaskObj } from "type";
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
-  addTask: (newTask: ITaskObj) => {
+  addTask: (newTask: Omit<ITaskObj, "_id">) => {
     dispatch({ type: TODO_ACTION_TYPES.ADD_TASK, payload: newTask });
   },
 });

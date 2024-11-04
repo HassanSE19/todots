@@ -1,12 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Layout from "components/Layout";
+import LayoutContainer from "containers/LayoutContainer";
 import flagIcon from "assets/images/flagIcon.png";
 
 const NotFound = () => {
   const navigate = useNavigate();
   return (
-    <Layout withLogout={false} handleLogout={() => {}}>
+    <LayoutContainer>
       <div className="mx-auto grid place-items-center text-center px-8">
         <div>
           <img src={flagIcon} className="w-20 h-20 mx-auto" />
@@ -21,13 +21,13 @@ const NotFound = () => {
           </p>
           <button
             className="w-full p-4 md:w-[8rem] bg-[gray] rounded-lg"
-            onClick={() => navigate("/home")}
+            onClick={() => navigate("/", { replace: true })}
           >
             back home
           </button>
         </div>
       </div>
-    </Layout>
+    </LayoutContainer>
   );
 };
 

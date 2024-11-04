@@ -12,7 +12,7 @@ const Home: React.FC<IHomeProps> = ({
   isLoading,
 }) => {
   return (
-    <LayoutContainer withLogout={true}>
+    <LayoutContainer>
       <Overview
         totalTaskCount={totalTaskCount}
         completedTaskCount={completedTaskCount}

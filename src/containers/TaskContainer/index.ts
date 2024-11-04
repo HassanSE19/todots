@@ -6,23 +6,22 @@ import { TODO_ACTION_TYPES } from "utils/constants/actionTypes";
 
 const mapStateToProps = (state: RootState, ownProps: ITaskContainerProps) => ({
   task: ownProps.task,
-  index: ownProps.index,
 });
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
   editTask: (editData: IEditActionType) => {
-    dispatch({ type: TODO_ACTION_TYPES.EDIT_TASK, payload: editData });
+    dispatch({ type: TODO_ACTION_TYPES.UPDATE_TASK, payload: editData });
   },
-  deleteTask: (targetIndex: number) => {
+  deleteTask: (_id: string) => {
     dispatch({
       type: TODO_ACTION_TYPES.DELETE_TASK,
-      payload: { targetIndex },
+      payload: { _id },
     });
   },
-  setTaskStatus: (targetIndex: number) => {
+  setTaskStatus: (_id: string) => {
     dispatch({
       type: TODO_ACTION_TYPES.SET_TASK_STATUS,
-      payload: { targetIndex },
+      payload: { _id },
     });
   },
 });

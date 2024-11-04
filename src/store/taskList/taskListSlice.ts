@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { notification } from "antd";
 import { ITaskObj } from "type";
 
 interface IInitialStateObj {
@@ -23,6 +24,28 @@ export const taskListSlice = createSlice({
   name: "taskList",
   initialState,
   reducers: {
+    //Get Task Array Actions
+    GET_TASK_ARRAY_STARTED: (state) => {
+      state.isLoading = true;
+    },
+
+    GET_TASK_ARRAY_COMPLETED: (
+      state,
+      { payload }: PayloadAction<ITaskObj[]>
+    ) => {
+      state.isLoading = false;
+      state.taskArray = payload;
+      state.totalTaskCount = state.taskArray.length;
+      state.completedTaskCount = state.taskArray.filter(
+        (task) => task.isCompleted === true
+      ).length;
+    },
+
+    GET_TASK_ARRAY_REJECTED: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = payload;
+    },
+
     //Add Task Actions
     ADD_TASK_STARTED: (state) => {
       state.isLoading = true;
@@ -32,26 +55,50 @@ export const taskListSlice = createSlice({
       state.isLoading = false;
       state.taskArray = payload;
       state.totalTaskCount = state.taskArray.length;
+      notification.success({
+        message: `Success`,
+        description: "You task has been added.",
+        duration: 2,
+      });
     },
 
     ADD_TASK_REJECTED: (state, { payload }: PayloadAction<ITaskObj>) => {
       state.isLoading = false;
       state.error = payload;
+      notification.error({
+        message: "Sorry",
+        description: "Couldn't add your task.",
+        duration: 2,
+      });
     },
 
-    //Edit Task Actions
-    EDIT_TASK_STARTED: (state) => {
+    //Update Task Actions
+    UPDATE_TASK_STARTED: (state) => {
       state.isLoading = true;
     },
 
-    EDIT_TASK_COMPLETED: (state, { payload }: PayloadAction<ITaskObj[]>) => {
+    UPDATE_TASK_COMPLETED: (state, { payload }: PayloadAction<ITaskObj[]>) => {
       state.isLoading = false;
       state.taskArray = payload;
+      state.totalTaskCount = state.taskArray.length;
+      state.completedTaskCount = state.taskArray.filter(
+        (task) => task.isCompleted === true
+      ).length;
+      notification.success({
+        message: `Success`,
+        description: "You task has been updated.",
+        duration: 2,
+      });
     },
 
-    EDIT_TASK_REJECTED: (state, { payload }) => {
+    UPDATE_TASK_REJECTED: (state, { payload }) => {
       state.isLoading = false;
       state.error = payload;
+      notification.error({
+        message: "Sorry",
+        description: "Couldn't update your task.",
+        duration: 2,
+      });
     },
 
     //Delete Task Actions
@@ -66,32 +113,21 @@ export const taskListSlice = createSlice({
       state.completedTaskCount = state.taskArray.filter(
         (task) => task.isCompleted === true
       ).length;
+      notification.success({
+        message: `Success`,
+        description: "You task has been deleted.",
+        duration: 2,
+      });
     },
 
     DELETE_TASK_REJECTED: (state, { payload }) => {
       state.isLoading = false;
       state.error = payload;
-    },
-
-    //Status Toggle Actions
-    SET_TASK_STATUS_STARTED: (state) => {
-      state.isLoading = true;
-    },
-
-    SET_TASK_STATUS_COMPLETED: (
-      state,
-      { payload }: PayloadAction<ITaskObj[]>
-    ) => {
-      state.isLoading = false;
-      state.taskArray = payload;
-      state.completedTaskCount = state.taskArray.filter(
-        (task) => task.isCompleted === true
-      ).length;
-    },
-
-    SET_TASK_STATUS_REJECTED: (state, { payload }) => {
-      state.isLoading = false;
-      state.error = payload;
+      notification.error({
+        message: "Sorry",
+        description: "Couldn't delete your task.",
+        duration: 2,
+      });
     },
   },
 });
@@ -100,15 +136,18 @@ export const {
   ADD_TASK_STARTED,
   ADD_TASK_COMPLETED,
   ADD_TASK_REJECTED,
-  EDIT_TASK_STARTED,
-  EDIT_TASK_COMPLETED,
-  EDIT_TASK_REJECTED,
+
+  UPDATE_TASK_STARTED,
+  UPDATE_TASK_COMPLETED,
+  UPDATE_TASK_REJECTED,
+
   DELETE_TASK_STARTED,
   DELETE_TASK_COMPLETED,
   DELETE_TASK_REJECTED,
-  SET_TASK_STATUS_STARTED,
-  SET_TASK_STATUS_COMPLETED,
-  SET_TASK_STATUS_REJECTED,
+
+  GET_TASK_ARRAY_STARTED,
+  GET_TASK_ARRAY_COMPLETED,
+  GET_TASK_ARRAY_REJECTED,
 } = taskListSlice.actions;
 
 export default taskListSlice.reducer;

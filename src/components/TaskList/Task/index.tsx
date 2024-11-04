@@ -6,13 +6,7 @@ import { editIcon } from "assets/svg/edit";
 import { binIcon } from "assets/svg/bin";
 import { ITaskProps, ITaskFormInput } from "type";
 
-const Task: React.FC<ITaskProps> = ({
-  task,
-  index,
-  editTask,
-  deleteTask,
-  setTaskStatus,
-}) => {
+const Task: React.FC<ITaskProps> = ({ task, editTask, deleteTask }) => {
   const [allowEdit, setAllowEdit] = useState<boolean>(false);
 
   const {
@@ -26,12 +20,12 @@ const Task: React.FC<ITaskProps> = ({
 
   const onSubmit: SubmitHandler<ITaskFormInput> = (data) => {
     setAllowEdit(false);
-    editTask({ newDesc: data.desc, targetIndex: index });
+    editTask({ _id: task._id, taskData: { desc: data.desc } });
     reset();
   };
 
   return allowEdit ? (
-    <div className="border-[#c2b39a] border h-16 mb-[27px]" key={index}>
+    <div className="border-[#c2b39a] border h-16 mb-[27px]" key={task._id}>
       <form className="w-full h-full" onSubmit={handleSubmit(onSubmit)}>
         <input
           type="text"
@@ -48,7 +42,12 @@ const Task: React.FC<ITaskProps> = ({
   ) : (
     <div className="border border-[#c2b39a] flex justify-between p-4 h-16 mb-[27px]">
       <button
-        onClick={() => setTaskStatus(index)}
+        onClick={() =>
+          editTask({
+            _id: task._id,
+            taskData: { isCompleted: !task.isCompleted },
+          })
+        }
         className="flex items-center"
       >
         <div
@@ -69,7 +68,7 @@ const Task: React.FC<ITaskProps> = ({
         <button className="mr-2" onClick={() => setAllowEdit(true)}>
           {editIcon}
         </button>
-        <button onClick={() => deleteTask(index)}>{binIcon}</button>
+        <button onClick={() => deleteTask(task._id)}>{binIcon}</button>
       </div>
     </div>
   );

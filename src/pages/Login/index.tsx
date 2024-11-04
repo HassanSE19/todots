@@ -1,10 +1,10 @@
 import React from "react";
-import Layout from "components/Layout";
+import { useNavigate } from "react-router-dom";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { AuthValidationSchema } from "validations/authValidationSchema";
-import { yupResolver } from "@hookform/resolvers/yup";
+import LayoutContainer from "containers/LayoutContainer";
 import { IAuthFormInput, ILoginProps } from "type";
-import { useNavigate } from "react-router-dom";
 
 const Login: React.FC<ILoginProps> = ({ login }) => {
   const navigate = useNavigate();
@@ -20,11 +20,10 @@ const Login: React.FC<ILoginProps> = ({ login }) => {
   const onSubmit: SubmitHandler<IAuthFormInput> = (data) => {
     login(data);
     reset();
-    navigate("/home");
   };
 
   return (
-    <Layout withLogout={false} handleLogout={() => {}}>
+    <LayoutContainer>
       <div className="w-2/3 mx-auto items-center">
         <p className="text-center text-4xl font-semibold text-white pt-2 mb-16">
           {"Login!"}
@@ -73,7 +72,7 @@ const Login: React.FC<ILoginProps> = ({ login }) => {
           {"Sign Up Now"}
         </p>
       </div>
-    </Layout>
+    </LayoutContainer>
   );
 };
 

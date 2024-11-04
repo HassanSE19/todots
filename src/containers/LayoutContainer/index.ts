@@ -4,8 +4,11 @@ import Layout from "components/Layout";
 import { ILayoutContainerProps } from "type";
 import { USER_ACTION_TYPES } from "utils/constants/actionTypes";
 
-const mapStateToProps = (_: RootState, ownProps: ILayoutContainerProps) => ({
-  withLogout: ownProps.withLogout,
+const mapStateToProps = (
+  state: RootState,
+  ownProps: ILayoutContainerProps
+) => ({
+  isAuthenticated: new Boolean(state.user._id).valueOf(),
   children: ownProps.children,
 });
 

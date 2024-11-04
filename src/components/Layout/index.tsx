@@ -4,7 +4,7 @@ import { ILayoutProps } from "type";
 
 const Layout: React.FC<ILayoutProps> = ({
   children,
-  withLogout,
+  isAuthenticated,
   handleLogout,
 }) => {
   return (
@@ -18,9 +18,12 @@ const Layout: React.FC<ILayoutProps> = ({
           />
           <div className="text-[2em] font-bold">TODO</div>
         </div>
-        {withLogout && (
+        {isAuthenticated && (
           <button
-            onClick={() => handleLogout()}
+            onClick={() => {
+              handleLogout();
+              window.location.replace("http://localhost:3000/");
+            }}
             className="rounded-2xl text-white bg-[#88ab33] px-4 py-2 shadow-md hover:text-[#88ab33] hover:bg-white transition duration-200 ease-in"
           >
             {"Logout"}

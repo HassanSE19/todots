@@ -1,13 +1,18 @@
 import { BrowserRouter } from "react-router-dom";
 import PublicRoutes from "routes/publicRoutes";
 import PrivateRoutes from "routes/privateRoutes";
+import useAuth from "hooks/useAuth";
 
 function App() {
-  const isAuthenticated = true;
+  const isTokenValid = useAuth();
 
   return (
     <BrowserRouter>
-      {isAuthenticated ? <PublicRoutes /> : <PrivateRoutes />}
+      {isTokenValid === null ? null : isTokenValid ? (
+        <PrivateRoutes />
+      ) : (
+        <PublicRoutes />
+      )}
     </BrowserRouter>
   );
 }

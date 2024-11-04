@@ -5,13 +5,21 @@ export interface IAuthObj {
   password: string;
 }
 
+export type IValidateToken = {
+  data: {
+    success: boolean;
+    user?: IUserObj;
+    error?: any;
+  };
+};
+
 export interface IUserObj {
   _id: string;
   username: string;
-  token: string;
 }
 
 export interface ITaskObj {
+  _id: string;
   desc: string;
   isCompleted: boolean;
 }
@@ -25,24 +33,23 @@ export interface ITaskFormInput {
   desc: string;
 }
 
-export interface IEditTaskPayload {
-  newDesc: string;
-  targetIndex: number;
-}
+// export interface IEditTaskPayload {
+//   newDesc: string;
+//   targetIndex: number;
+// }
 
-export interface IDeleteAndTogglePayload {
-  targetIndex: number;
+export interface IDeletePayload {
+  _id: string;
 }
 
 export interface ILayoutProps {
   children: ReactNode;
-  withLogout: boolean;
+  isAuthenticated: boolean;
   handleLogout: () => void;
 }
 
 export interface ILayoutContainerProps {
   children: ReactNode;
-  withLogout: boolean;
 }
 
 export interface ILoginProps {
@@ -67,15 +74,12 @@ export interface ITaskListProps {
 
 export interface ITaskContainerProps {
   task: ITaskObj;
-  index: number;
 }
 
 export interface ITaskProps {
   task: ITaskObj;
-  index: number;
   editTask: (editData: IEditActionType) => void;
-  deleteTask: (targetIndex: number) => void;
-  setTaskStatus: (targetIndex: number) => void;
+  deleteTask: (_id: string) => void;
 }
 
 export interface IOverviewProps {
@@ -84,12 +88,15 @@ export interface IOverviewProps {
 }
 
 export interface IAddTaskProps {
-  addTask: (newTask: ITaskObj) => void;
+  addTask: (newTask: Omit<ITaskObj, "_id">) => void;
 }
 
 export interface IEditActionType {
-  newDesc: string;
-  targetIndex: number;
+  _id: string;
+  taskData: {
+    desc?: string;
+    isCompleted?: boolean;
+  };
 }
 
 export type TaskEditType = (newDesc: string, targetIndex: number) => void;
