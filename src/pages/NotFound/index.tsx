@@ -21,7 +21,7 @@ const NotFound = () => {
           </p>
           <button
             className="w-full p-4 md:w-[8rem] bg-[gray] rounded-lg"
-            onClick={() => navigate("/", { replace: true })}
+            onClick={() => navigate("/")}
           >
             back home
           </button>
