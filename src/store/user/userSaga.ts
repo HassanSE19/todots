@@ -17,9 +17,7 @@ const userAxios = axios.create({
   timeout: 5000,
 });
 
-function* signup({
-  payload,
-}: PayloadAction<IAuthObj>): Generator<any, void, any> {
+function* signup({ payload }: PayloadAction<IAuthObj>) {
   try {
     const {
       data: { success, user, token, error },
@@ -40,9 +38,7 @@ function* signup({
   }
 }
 
-function* login({
-  payload,
-}: PayloadAction<IAuthObj>): Generator<any, void, any> {
+function* login({ payload }: PayloadAction<IAuthObj>) {
   try {
     const {
       data: { success, user, token, error },
