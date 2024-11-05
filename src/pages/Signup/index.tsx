@@ -21,7 +21,6 @@ const SignUp: React.FC<ISignupProps> = ({ signup }) => {
   const onSubmit: SubmitHandler<IAuthFormInput> = (data) => {
     signup(data);
     reset();
-    window.location.replace("http://localhost:3000/");
   };
 
   return (

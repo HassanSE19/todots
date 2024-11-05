@@ -1,6 +1,6 @@
 import axios from "axios";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { put, takeEvery, select, call } from "redux-saga/effects";
+import { put, takeEvery, call } from "redux-saga/effects";
 import { IDeletePayload, IEditActionType, ITaskObj } from "type";
 import { TODO_ACTION_TYPES } from "utils/constants/actionTypes";
 import getToken from "utils/getTokenFromCookie";
@@ -26,17 +26,13 @@ const taskAxios = axios.create({
 
 function* getTaskArray() {
   try {
-    let userId: string = yield select((state) => state.user._id);
+    const {
+      data: { success, taskArray, error },
+    } = yield call(taskAxios.get, "/get-list");
 
-    if (userId) {
-      const {
-        data: { success, taskArray, error },
-      } = yield call(taskAxios.get, "/get-list", { params: { userId } });
-
-      if (success) {
-        yield put(GET_TASK_ARRAY_COMPLETED(taskArray));
-      } else throw new Error(error.massage);
-    } else throw new Error("Couldn't find the user");
+    if (success) {
+      yield put(GET_TASK_ARRAY_COMPLETED(taskArray));
+    } else throw new Error(error.massage);
   } catch (error: any) {
     yield put(GET_TASK_ARRAY_REJECTED(error));
   }
@@ -44,18 +40,14 @@ function* getTaskArray() {
 
 function* addTask({ payload }: PayloadAction<ITaskObj>) {
   try {
-    let userId: string = yield select((state) => state.user._id);
+    const task = payload;
+    const {
+      data: { success, taskArray, error },
+    } = yield call(taskAxios.post, "/add-task", { task });
 
-    if (userId) {
-      const task = { ...payload, userId };
-      const {
-        data: { success, taskArray, error },
-      } = yield call(taskAxios.post, "/add-task", { task });
-
-      if (success) {
-        yield put(ADD_TASK_COMPLETED(taskArray));
-      } else throw new Error(error.massage);
-    } else throw new Error("Couldn't find the user");
+    if (success) {
+      yield put(ADD_TASK_COMPLETED(taskArray));
+    } else throw new Error(error.massage);
   } catch (error: any) {
     yield put(ADD_TASK_REJECTED(error));
   }
@@ -65,17 +57,13 @@ function* updateTask({
   payload: { _id, taskData },
 }: PayloadAction<IEditActionType>) {
   try {
-    let userId: string = yield select((state) => state.user._id);
+    const {
+      data: { success, taskArray, error },
+    } = yield call(taskAxios.patch, "/update-task", { _id, taskData });
 
-    if (userId) {
-      const {
-        data: { success, taskArray, error },
-      } = yield call(taskAxios.put, "/update-task", { _id, taskData, userId });
-
-      if (success) {
-        yield put(UPDATE_TASK_COMPLETED(taskArray));
-      } else throw new Error(error.massage);
-    } else throw new Error("Couldn't find the user");
+    if (success) {
+      yield put(UPDATE_TASK_COMPLETED(taskArray));
+    } else throw new Error(error.massage);
   } catch (error: any) {
     yield put(UPDATE_TASK_REJECTED(error.massage));
   }
@@ -83,19 +71,15 @@ function* updateTask({
 
 function* deleteTask({ payload: { _id } }: PayloadAction<IDeletePayload>) {
   try {
-    let userId: string = yield select((state) => state.user._id);
+    const {
+      data: { success, taskArray, error },
+    } = yield call(taskAxios.delete, "/delete-task", {
+      params: { _id },
+    });
 
-    if (userId) {
-      const {
-        data: { success, taskArray, error },
-      } = yield call(taskAxios.delete, "/delete-task", {
-        params: { _id, userId },
-      });
-
-      if (success) {
-        yield put(DELETE_TASK_COMPLETED(taskArray));
-      } else throw new Error(error.massage);
-    } else throw new Error("Couldn't find the user");
+    if (success) {
+      yield put(DELETE_TASK_COMPLETED(taskArray));
+    } else throw new Error(error.massage);
   } catch (error: any) {
     yield put(DELETE_TASK_REJECTED(error));
   }

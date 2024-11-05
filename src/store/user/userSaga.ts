@@ -26,6 +26,7 @@ function* signup({
     } = yield call(userAxios.post, "/signup", { user: payload });
     if (success) {
       Cookies.set("token", `${token}`, { expires: 1 });
+      console.log({ user });
       yield put(SIGNUP_COMPLETED(user));
       window.location.replace("http://localhost:3000/");
     } else throw new Error(error);
@@ -45,7 +46,7 @@ function* login({
   try {
     const {
       data: { success, user, token, error },
-    } = yield call(userAxios.get, "/login", { params: payload });
+    } = yield call(userAxios.post, "/login", { ...payload });
     if (success) {
       Cookies.set("token", `${token}`, { expires: 1 });
       yield put(LOGIN_COMPLETED(user));
