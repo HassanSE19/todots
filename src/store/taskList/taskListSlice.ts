@@ -7,8 +7,7 @@ interface IInitialStateObj {
   completedTaskCount: number;
   totalTaskCount: number;
   isLoading: boolean;
-  statusCode: number | null;
-  error: any;
+  error: string;
 }
 
 const initialState: IInitialStateObj = {
@@ -16,8 +15,7 @@ const initialState: IInitialStateObj = {
   completedTaskCount: 0,
   totalTaskCount: 0,
   isLoading: false,
-  statusCode: null,
-  error: null,
+  error: "",
 };
 
 export const taskListSlice = createSlice({
@@ -62,7 +60,7 @@ export const taskListSlice = createSlice({
       });
     },
 
-    ADD_TASK_REJECTED: (state, { payload }: PayloadAction<ITaskObj>) => {
+    ADD_TASK_REJECTED: (state, { payload }) => {
       state.isLoading = false;
       state.error = payload;
       notification.error({

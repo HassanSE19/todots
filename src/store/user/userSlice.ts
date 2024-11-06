@@ -3,19 +3,19 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IUserObj } from "type";
 
 interface IInitialStateObj {
-  _id: null | string;
-  username: null | string;
+  _id: string;
+  username: string;
   isAuthenticated: boolean;
   isLoading: boolean;
-  error: null | string;
+  error: string;
 }
 
 const initialState: IInitialStateObj = {
-  _id: null,
-  username: null,
+  _id: "",
+  username: "",
   isAuthenticated: false,
   isLoading: false,
-  error: null,
+  error: "",
 };
 
 export const userSlice = createSlice({
@@ -26,7 +26,7 @@ export const userSlice = createSlice({
     GET_USER_STARTED: (state) => {
       state.isLoading = true;
       state.isAuthenticated = false;
-      state.error = null;
+      state.error = "";
     },
 
     GET_USER_COMPLETED: (
@@ -49,7 +49,7 @@ export const userSlice = createSlice({
     SIGNUP_STARTED: (state) => {
       state.isAuthenticated = false;
       state.isLoading = true;
-      state.error = null;
+      state.error = "";
     },
 
     SIGNUP_COMPLETED: (
@@ -72,7 +72,7 @@ export const userSlice = createSlice({
     LOGIN_STARTED: (state) => {
       state.isAuthenticated = false;
       state.isLoading = true;
-      state.error = null;
+      state.error = "";
     },
 
     LOGIN_COMPLETED: (
@@ -93,11 +93,7 @@ export const userSlice = createSlice({
 
     //Logout Actions
     LOGOUT: (state) => {
-      state._id = null;
-      state.username = null;
-      state.isAuthenticated = false;
-      state.isLoading = false;
-      state.error = null;
+      state = initialState;
       Cookies.remove("token");
     },
   },
