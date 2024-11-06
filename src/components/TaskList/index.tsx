@@ -8,9 +8,7 @@ const TaskList: React.FC<ITaskListProps> = ({ taskArray, isLoading }) => {
       {isLoading ? (
         <div>Loading...</div>
       ) : (
-        taskArray.map((task, index) => (
-          <TaskContainer key={index} task={task} index={index} />
-        ))
+        taskArray.map((task) => <TaskContainer task={task} />)
       )}
     </div>
   );

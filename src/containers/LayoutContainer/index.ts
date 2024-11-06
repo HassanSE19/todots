@@ -1,11 +1,14 @@
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "store/store";
 import Layout from "components/Layout";
 import { ILayoutContainerProps } from "type";
 import { USER_ACTION_TYPES } from "utils/constants/actionTypes";
 
-const mapStateToProps = (_: RootState, ownProps: ILayoutContainerProps) => ({
-  withLogout: ownProps.withLogout,
+const mapStateToProps = (
+  state: RootState,
+  ownProps: ILayoutContainerProps
+) => ({
+  isAuthenticated: state.user.isAuthenticated,
   children: ownProps.children,
 });
 

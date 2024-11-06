@@ -1,80 +1,93 @@
-import { put, takeEvery, select } from "redux-saga/effects";
+import axios from "axios";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { IDeleteAndTogglePayload, IEditTaskPayload, ITaskObj } from "type";
+import { put, takeEvery, call } from "redux-saga/effects";
+import { IDeletePayload, IEditActionType, ITaskObj } from "type";
 import { TODO_ACTION_TYPES } from "utils/constants/actionTypes";
+import getToken from "utils/getTokenFromCookie";
 import {
   ADD_TASK_COMPLETED,
   ADD_TASK_REJECTED,
-  EDIT_TASK_COMPLETED,
-  EDIT_TASK_REJECTED,
+  UPDATE_TASK_COMPLETED,
+  UPDATE_TASK_REJECTED,
   DELETE_TASK_COMPLETED,
   DELETE_TASK_REJECTED,
-  SET_TASK_STATUS_COMPLETED,
-  SET_TASK_STATUS_REJECTED,
+  GET_TASK_ARRAY_COMPLETED,
+  GET_TASK_ARRAY_REJECTED,
 } from "./taskListSlice";
+
+const taskAxios = axios.create({
+  baseURL: "http://localhost:8080/todo-list",
+  timeout: 5000,
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${getToken()}`,
+  },
+});
+
+function* getTaskArray() {
+  try {
+    const {
+      data: { success, taskArray, error },
+    } = yield call(taskAxios.get, "/get-list");
+
+    if (success) {
+      yield put(GET_TASK_ARRAY_COMPLETED(taskArray));
+    } else throw new Error(error.massage);
+  } catch (error: any) {
+    yield put(GET_TASK_ARRAY_REJECTED(error));
+  }
+}
 
 function* addTask({ payload }: PayloadAction<ITaskObj>) {
   try {
-    let newTaskArray: ITaskObj[] = yield select(
-      (state) => state.taskList.taskArray
-    );
-    const newTask = payload;
-    newTaskArray = [...newTaskArray, newTask];
-    yield put(ADD_TASK_COMPLETED(newTaskArray));
+    const task = payload;
+    const {
+      data: { success, taskArray, error },
+    } = yield call(taskAxios.post, "/add-task", { task });
+
+    if (success) {
+      yield put(ADD_TASK_COMPLETED(taskArray));
+    } else throw new Error(error.massage);
   } catch (error: any) {
     yield put(ADD_TASK_REJECTED(error));
   }
 }
 
-function* editTask({
-  payload: { newDesc, targetIndex },
-}: PayloadAction<IEditTaskPayload>) {
+function* updateTask({
+  payload: { _id, taskData },
+}: PayloadAction<IEditActionType>) {
   try {
-    let newTaskArray: ITaskObj[] = yield select(
-      (state) => state.taskList.taskArray
-    );
-    newTaskArray = newTaskArray.map((task, index) =>
-      index === targetIndex ? { ...task, desc: newDesc } : task
-    );
-    yield put(EDIT_TASK_COMPLETED(newTaskArray));
+    const {
+      data: { success, taskArray, error },
+    } = yield call(taskAxios.patch, "/update-task", { _id, taskData });
+
+    if (success) {
+      yield put(UPDATE_TASK_COMPLETED(taskArray));
+    } else throw new Error(error.massage);
   } catch (error: any) {
-    yield put(EDIT_TASK_REJECTED(error));
+    yield put(UPDATE_TASK_REJECTED(error.massage));
   }
 }
 
-function* deleteTask({
-  payload: { targetIndex },
-}: PayloadAction<IDeleteAndTogglePayload>) {
+function* deleteTask({ payload: { _id } }: PayloadAction<IDeletePayload>) {
   try {
-    let newTaskArray: ITaskObj[] = yield select(
-      (state) => state.taskList.taskArray
-    );
-    newTaskArray = newTaskArray.filter((_, index) => index !== targetIndex);
-    yield put(DELETE_TASK_COMPLETED(newTaskArray));
+    const {
+      data: { success, taskArray, error },
+    } = yield call(taskAxios.delete, "/delete-task", {
+      params: { _id },
+    });
+
+    if (success) {
+      yield put(DELETE_TASK_COMPLETED(taskArray));
+    } else throw new Error(error.massage);
   } catch (error: any) {
     yield put(DELETE_TASK_REJECTED(error));
   }
 }
 
-function* setTaskStatus({
-  payload: { targetIndex },
-}: PayloadAction<IDeleteAndTogglePayload>) {
-  try {
-    let newTaskArray: ITaskObj[] = yield select(
-      (state) => state.taskList.taskArray
-    );
-    newTaskArray = newTaskArray.map((task, index) =>
-      index === targetIndex ? { ...task, isCompleted: !task.isCompleted } : task
-    );
-    yield put(SET_TASK_STATUS_COMPLETED(newTaskArray));
-  } catch (error: any) {
-    yield put(SET_TASK_STATUS_REJECTED(error));
-  }
-}
-
 export function* watchTodoListSaga() {
   yield takeEvery(TODO_ACTION_TYPES.ADD_TASK, addTask);
-  yield takeEvery(TODO_ACTION_TYPES.EDIT_TASK, editTask);
+  yield takeEvery(TODO_ACTION_TYPES.UPDATE_TASK, updateTask);
   yield takeEvery(TODO_ACTION_TYPES.DELETE_TASK, deleteTask);
-  yield takeEvery(TODO_ACTION_TYPES.SET_TASK_STATUS, setTaskStatus);
+  yield takeEvery(TODO_ACTION_TYPES.GET_TASK_ARRAY, getTaskArray);
 }
