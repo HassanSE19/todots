@@ -1,4 +1,4 @@
-import { connect, useSelector } from "react-redux";
+import { connect } from "react-redux";
 import { AppDispatch, RootState } from "store/store";
 import Layout from "components/Layout";
 import { ILayoutContainerProps } from "type";
@@ -8,8 +8,9 @@ const mapStateToProps = (
   state: RootState,
   ownProps: ILayoutContainerProps
 ) => ({
-  isAuthenticated: state.user.isAuthenticated,
   children: ownProps.children,
+  username: state.user.username || "",
+  isAuthenticated: state.user.isAuthenticated,
 });
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
