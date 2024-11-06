@@ -33,17 +33,13 @@ export interface ITaskFormInput {
   desc: string;
 }
 
-// export interface IEditTaskPayload {
-//   newDesc: string;
-//   targetIndex: number;
-// }
-
 export interface IDeletePayload {
   _id: string;
 }
 
 export interface ILayoutProps {
   children: ReactNode;
+  username: string;
   isAuthenticated: boolean;
   handleLogout: () => void;
 }
